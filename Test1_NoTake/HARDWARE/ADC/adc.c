@@ -113,30 +113,30 @@ u16 Filter(u8 ch)
 
 
 u16 ADC_Origin[4];	
-double Origin_voltage[4];
+int Origin_voltage[4];
 void Origin_Find()
 {
   static u8 x,m;
 	static double sum_avg[4]={0};
   printf("FIND ORIGIN\r\n");
-  for(x=0;x<4;x++)
+  for(x=0;x<2;x++)
 	{
 			for(m=0;m<10;m++)
 			{
 				ADC_Origin[x] = Filter(x+1);
-				sum_avg[x] += ADC_Origin[x]*3.3/4096;
+				sum_avg[x] += ADC_Origin[x];
 		  }
 		Origin_voltage[x] = (double)sum_avg[x]/10.0;
 		sum_avg[x] = 0;
 	}
-	  for(x=0;x<4;x++)
+	  for(x=2;x<4;x++)
 	{
 			for(m=0;m<10;m++)
 			{
 				ADC_Origin[x] = Filter(x+10);
-				sum_avg[x] += ADC_Origin[x]*3.3/4096;
+				sum_avg[x] += ADC_Origin[x];
 		  }
-		Origin_voltage[x] = (double)sum_avg[x]/10.0;
+		Origin_voltage[x] = sum_avg[x]/10.0;
 		sum_avg[x] = 0;
 	}
 }

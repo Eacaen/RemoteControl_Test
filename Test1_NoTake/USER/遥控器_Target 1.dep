@@ -1,5 +1,5 @@
-Dependencies for Project 'Õ½½¢Ò£¿ØÆ÷', Target 'Target 1': (DO NOT MODIFY !)
-F (.\main.c)(0x56BF2EC4)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\HARDWARE\LED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\USER -I..\STM32F10x_FWLib\inc -I..\CORE -I..\HARDWARE\KEY -I..\HARDWARE\LCD -I..\HARDWARE\RTC -I..\HARDWARE\RTC -I..\HARDWARE\WKUP -I..\HARDWARE\ADC -I..\HARDWARE\NRF24L01 -I..\HARDWARE\SPI -I C:\MDK4.7\ARM\RV31\INC -I C:\MDK4.7\ARM\CMSIS\Include -I C:\MDK4.7\ARM\Inc\ST\STM32F10x -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o "..\OBJ\main.o" --omf_browse "..\OBJ\main.crf" --depend "..\OBJ\main.d")
+Dependencies for Project 'Ò£¿ØÆ÷', Target 'Target 1': (DO NOT MODIFY !)
+F (.\main.c)(0x56D005EA)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\HARDWARE\LED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\USER -I..\STM32F10x_FWLib\inc -I..\CORE -I..\HARDWARE\KEY -I..\HARDWARE\LCD -I..\HARDWARE\RTC -I..\HARDWARE\RTC -I..\HARDWARE\WKUP -I..\HARDWARE\ADC -I..\HARDWARE\NRF24L01 -I..\HARDWARE\SPI -I C:\MDK4.7\ARM\RV31\INC -I C:\MDK4.7\ARM\CMSIS\Include -I C:\MDK4.7\ARM\Inc\ST\STM32F10x -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o "..\OBJ\main.o" --omf_browse "..\OBJ\main.crf" --depend "..\OBJ\main.d")
 I (..\HARDWARE\LED\led.h)(0x56487078)
 I (..\SYSTEM\sys\sys.h)(0x56487078)
 I (..\USER\stm32f10x.h)(0x56487078)
@@ -114,7 +114,7 @@ I (..\HARDWARE\LCD\font.h)(0x56487078)
 I (..\SYSTEM\usart\usart.h)(0x56487078)
 I (C:\MDK4.7\ARM\ARMCC\bin\..\include\stdio.h)(0x50F96150)
 I (..\SYSTEM\delay\delay.h)(0x56487078)
-F (..\HARDWARE\ADC\adc.c)(0x56BF21D2)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\HARDWARE\LED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\USER -I..\STM32F10x_FWLib\inc -I..\CORE -I..\HARDWARE\KEY -I..\HARDWARE\LCD -I..\HARDWARE\RTC -I..\HARDWARE\RTC -I..\HARDWARE\WKUP -I..\HARDWARE\ADC -I..\HARDWARE\NRF24L01 -I..\HARDWARE\SPI -I C:\MDK4.7\ARM\RV31\INC -I C:\MDK4.7\ARM\CMSIS\Include -I C:\MDK4.7\ARM\Inc\ST\STM32F10x -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o "..\OBJ\adc.o" --omf_browse "..\OBJ\adc.crf" --depend "..\OBJ\adc.d")
+F (..\HARDWARE\ADC\adc.c)(0x56CFFEAA)(-c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\HARDWARE\LED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\USER -I..\STM32F10x_FWLib\inc -I..\CORE -I..\HARDWARE\KEY -I..\HARDWARE\LCD -I..\HARDWARE\RTC -I..\HARDWARE\RTC -I..\HARDWARE\WKUP -I..\HARDWARE\ADC -I..\HARDWARE\NRF24L01 -I..\HARDWARE\SPI -I C:\MDK4.7\ARM\RV31\INC -I C:\MDK4.7\ARM\CMSIS\Include -I C:\MDK4.7\ARM\Inc\ST\STM32F10x -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o "..\OBJ\adc.o" --omf_browse "..\OBJ\adc.crf" --depend "..\OBJ\adc.d")
 I (..\HARDWARE\ADC\adc.h)(0x56487078)
 I (..\SYSTEM\sys\sys.h)(0x56487078)
 I (..\USER\stm32f10x.h)(0x56487078)

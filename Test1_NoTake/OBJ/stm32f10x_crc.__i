@@ -1,5 +1,0 @@
--c --cpu Cortex-M3 -g -O0 --apcs=interwork -I..\HARDWARE\LED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\USER -I..\STM32F10x_FWLib\inc -I..\CORE -I..\HARDWARE\KEY -I..\HARDWARE\LCD -I..\HARDWARE\RTC -I..\HARDWARE\RTC -I..\HARDWARE\WKUP -I..\HARDWARE\ADC -I..\HARDWARE\NRF24L01 -I..\HARDWARE\SPI 
--I C:\MDK4.7\ARM\RV31\INC 
--I C:\MDK4.7\ARM\CMSIS\Include 
--I C:\MDK4.7\ARM\Inc\ST\STM32F10x 
--DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER -o "..\OBJ\stm32f10x_crc.o" --omf_browse "..\OBJ\stm32f10x_crc.crf" --depend "..\OBJ\stm32f10x_crc.d" "..\STM32F10x_FWLib\src\stm32f10x_crc.c"

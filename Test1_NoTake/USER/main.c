@@ -10,16 +10,15 @@
 
 u8 i,t,ADC_OK=0;
 u16 ADC_value[4];
-double ADC_voltage[4];
+int ADC_voltage[4];
 
-void deal_data(double *voltage);
-
+void deal_data(int *voltage);
 extern u16 ADC_Origin[4];	
-extern double Origin_voltage[4];
-u8 send_data[20];
+extern int Origin_voltage[4];
+u8 send_data[10];
 
  int main(void)
- { 
+ {
 	delay_init();	    	 //延时函数初始化	  
 	NVIC_Configuration(); 	 //设置NVIC中断分组2:2位抢占优先级，2位响应优先级
 	uart_init(9600);	 	//串口初始化为9600
@@ -38,24 +37,32 @@ u8 send_data[20];
 	printf("NRF OK\r\n");
 	NRF24L01_TX_Mode();
 	
-	Origin_Find();
+// 	Origin_Find();
        
 	while(1)
 	{
 
 		send_data[0]=0xff;
 		send_data[1]=0xff;		
-	
-		for(i=0;i<4;i++)			//PA0  PA1  PC2 PC3
+		for(i=0;i<2;i++)			//PA0  PA1
 			{
-				ADC_value[i] = Filter(i);
-				ADC_voltage[i] = ADC_value[i]*900/4096 - Origin_voltage[i];
+				ADC_value[i] = Filter(i+1);
+				ADC_voltage[i] = ADC_value[i] - Origin_voltage[i];
 				
 				ADC_OK=1;
-				printf("  %d - %.3f",i,ADC_voltage[i]);
+// 				printf("  %d - %d",i,ADC_voltage[i]);
 			}
+					for(i=2;i<4;i++)			//PA0  PA1
+			{
+				ADC_value[i] = Filter(i+10);
+				ADC_voltage[i] = ADC_value[i]- Origin_voltage[i];
+				
+				ADC_OK=1;
+				printf("  %d - %d",i,ADC_voltage[i]);
+			}
+				printf("\r\n");
 		deal_data(ADC_voltage);
-		printf("\r\n");
+	
 	
 			
 			
@@ -72,9 +79,23 @@ u8 send_data[20];
 	}
  }
  
- 
- void deal_data(double *voltage)
+/*************************************************
+ 0.										3.
+            
+4095<---1990--->0			1<---2073--->4093
+
+
+1.  4095              4.	 1
+	    |										 |
+      |                    |
+		2083									2116
+ 			|										 |
+      |										 |
+		  1										4092						
+*************************************************/
+ void deal_data(int *voltage)
  {
+// 	 u16 comb;
 		send_data[2] = (u16)voltage[0]/256;
 		send_data[3] = (u16)voltage[0]%256;
 	 
@@ -86,5 +107,10 @@ u8 send_data[20];
 	 
 	  send_data[8] = (u16)voltage[3]/256;
 		send_data[9] = (u16)voltage[3]%256;
+	 
+	 printf("%x  %x \r\n",send_data[8],send_data[9]);
+	 
+// 	 comb = send_data[8]<<8 | send_data[9];
+// 	 printf("%d\r\n",comb);
  }
 
