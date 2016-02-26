@@ -6,13 +6,15 @@
 #include "usart.h"	 
 #include "adc.h"
 #include "24l01.h" 	 
+#include "math.h"
 
-
-u8 i,t,ADC_OK=0;
+u8 i,t,ADC_OK=0,Can_Send = 0;
+u8 LOCK=1,UN_LOCK = 0;
 u16 ADC_value[4];
 int ADC_voltage[4];
 
 void deal_data(int *voltage);
+void lock();
 extern u16 ADC_Origin[4];	
 extern int Origin_voltage[4];
 u8 send_data[10];
@@ -58,24 +60,61 @@ u8 send_data[10];
 				ADC_voltage[i] = ADC_value[i]- Origin_voltage[i];
 				
 				ADC_OK=1;
-				printf("  %d - %d",i,ADC_voltage[i]);
+// 				printf("  %d - %d",i,ADC_voltage[i]);
 			}
-				printf("\r\n");
-		deal_data(ADC_voltage);
-	
-	
+// 				printf("\r\n");
 			
+			if(LOCK)
+			{
+				ADC_value[0] = Filter(1);
+				if(ADC_value[0]>3000)
+				{
+					delay_ms(1000);
+					ADC_value[0] = Filter(1);
+					if(ADC_value[0]>3000)
+					{
+						lock();
+						NRF24L01_TX_Mode();
+						if(NRF24L01_TxPacket(send_data)==TX_OK)
+						{	
+								NRF24L01_Write_Reg(FLUSH_TX,0xff);//清除TX FIFO寄存器 
+						}
+				
+				UN_LOCK = 1;//解锁 进行ADC采集发送
+				LOCK = 1;//不需要解锁了
+			}
+		}
+	}
 			
-	if(ADC_OK )
-	 {	
- 			 NRF24L01_TX_Mode();
-					if(NRF24L01_TxPacket(send_data)==TX_OK)
-				{	
-				NRF24L01_Write_Reg(FLUSH_TX,0xff);//清除TX FIFO寄存器 
+			if(UN_LOCK == 1)//解锁成功
+			{
+				
+			if(ADC_OK)
+			{
+// 			 if(fabs(ADC_voltage[0]-1990)>20||fabs(ADC_voltage[1]-2083)>20||
+// 				fabs(ADC_voltage[2]-2116)>20||fabs(ADC_voltage[3]-2073)>20)
+			 {
+					Can_Send = 1;
+					deal_data(ADC_voltage);
 				}
+// 				ADC_OK = 0;
+// 			}
+// 	
+// 			
+// 			
+// 	if(Can_Send )
+// 	 {	
+ 			 NRF24L01_TX_Mode();
+			if(NRF24L01_TxPacket(send_data)==TX_OK)
+				{	
+					printf("----OK");
+						NRF24L01_Write_Reg(FLUSH_TX,0xff);//清除TX FIFO寄存器 
+				}
+			Can_Send =0;
 			ADC_OK = 0;
 
-	 }
+			}
+		}
 	}
  }
  
@@ -93,22 +132,28 @@ u8 send_data[10];
       |										 |
 		  1										4092						
 *************************************************/
+ void lock()
+ {
+		u8 i;
+	 for(i = 0;i<9;i++)send_data[i]=0xff;
+	 
+	}
+
  void deal_data(int *voltage)
  {
-// 	 u16 comb;
+	 u16 comb;
 		send_data[2] = (u16)voltage[0]/256;
 		send_data[3] = (u16)voltage[0]%256;
 	 
-	  send_data[4] = (u16)voltage[1]/256;
+	  send_data[4] = (u16)voltage[1]/256; //power
 		send_data[5] = (u16)voltage[1]%256;
 	 
-	  send_data[6] = (u16)voltage[2]/256;
+	  send_data[6] = (u16)voltage[2]/256; //pitch
 		send_data[7] = (u16)voltage[2]%256;
 	 
-	  send_data[8] = (u16)voltage[3]/256;
+	  send_data[8] = (u16)voltage[3]/256; //roll
 		send_data[9] = (u16)voltage[3]%256;
 	 
-	 printf("%x  %x \r\n",send_data[8],send_data[9]);
 	 
 // 	 comb = send_data[8]<<8 | send_data[9];
 // 	 printf("%d\r\n",comb);

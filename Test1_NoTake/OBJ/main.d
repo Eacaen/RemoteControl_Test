@@ -24,3 +24,4 @@
 ..\OBJ\main.o: C:\MDK4.7\ARM\ARMCC\bin\..\include\stdio.h
 ..\OBJ\main.o: ..\HARDWARE\ADC\adc.h
 ..\OBJ\main.o: ..\HARDWARE\NRF24L01\24l01.h
+..\OBJ\main.o: C:\MDK4.7\ARM\ARMCC\bin\..\include\math.h
