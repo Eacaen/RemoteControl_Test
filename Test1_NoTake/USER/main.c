@@ -13,6 +13,7 @@ u8 LOCK=1,UN_LOCK = 0;
 u16 ADC_value[4];
 int ADC_voltage[4];
 
+ void ADC_Get_Value();
 void deal_data(int *voltage);
 void lock();
 extern u16 ADC_Origin[4];	
@@ -40,30 +41,13 @@ u8 send_data[10];
 	NRF24L01_TX_Mode();
 	
 // 	Origin_Find();
-       
+		send_data[0]=0xff;
+		send_data[1]=0xff;		    
 	while(1)
 	{
 
-		send_data[0]=0xff;
-		send_data[1]=0xff;		
-		for(i=0;i<2;i++)			//PA0  PA1
-			{
-				ADC_value[i] = Filter(i+1);
-				ADC_voltage[i] = ADC_value[i] - Origin_voltage[i];
-				
-				ADC_OK=1;
-// 				printf("  %d - %d",i,ADC_voltage[i]);
-			}
-					for(i=2;i<4;i++)			//PA0  PA1
-			{
-				ADC_value[i] = Filter(i+10);
-				ADC_voltage[i] = ADC_value[i]- Origin_voltage[i];
-				
-				ADC_OK=1;
-// 				printf("  %d - %d",i,ADC_voltage[i]);
-			}
-// 				printf("\r\n");
-			
+		
+	
 			if(LOCK)
 			{
 				ADC_value[0] = Filter(1);
@@ -91,6 +75,7 @@ u8 send_data[10];
 				
 			if(ADC_OK)
 			{
+				 ADC_Get_Value();
 // 			 if(fabs(ADC_voltage[0]-1990)>20||fabs(ADC_voltage[1]-2083)>20||
 // 				fabs(ADC_voltage[2]-2116)>20||fabs(ADC_voltage[3]-2073)>20)
 			 {
@@ -104,7 +89,6 @@ u8 send_data[10];
 // 			
 // 	if(Can_Send )
 // 	 {	
- 			 NRF24L01_TX_Mode();
 			if(NRF24L01_TxPacket(send_data)==TX_OK)
 				{	
 					printf("----OK");
@@ -118,6 +102,32 @@ u8 send_data[10];
 	}
  }
  
+ 
+ 
+ void ADC_Get_Value()
+ {
+	 u8 i;
+	 	for(i=0;i<2;i++)			//PA0  PA1
+			{
+				ADC_value[i] = Filter(i+1);
+				ADC_voltage[i] = ADC_value[i] - Origin_voltage[i];
+				
+				ADC_OK=1;
+// 				printf("  %d - %d",i,ADC_voltage[i]);
+			}
+					for(i=2;i<4;i++)			//PA0  PA1
+			{
+				ADC_value[i] = Filter(i+10);
+				ADC_voltage[i] = ADC_value[i]- Origin_voltage[i];
+				
+				ADC_OK=1;
+// 				printf("  %d - %d",i,ADC_voltage[i]);
+			}
+// 				printf("\r\n");
+			
+		}
+		
+		
 /*************************************************
  0.										3.
             
